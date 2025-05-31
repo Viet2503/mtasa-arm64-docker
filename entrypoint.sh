@@ -102,7 +102,7 @@ main() {
     ln -sf /resources "${DATA_DIR}/resources"
     ln -sf /resource-cache "${DATA_DIR}/resource-cache"
 
-    "${MTA_SERVER_ROOT_DIR}/mta-server64" --config "${MTA_SERVER_CONFIG_FILE_NAME}" $@
+    "${MTA_SERVER_ROOT_DIR}/mta-server-arm64" --config "${MTA_SERVER_CONFIG_FILE_NAME}" $@
 }
 
 main $@
