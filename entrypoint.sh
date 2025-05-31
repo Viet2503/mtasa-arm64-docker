@@ -55,7 +55,7 @@ main() {
 
     if [ "$(ls -A /native-modules/*.so)" ]; then
         echo "Copying native modules..."
-        cp -vf /native-modules/*.so "${MTA_SERVER_ROOT_DIR}/x64/modules"
+        cp -vf /native-modules/*.so "${MTA_SERVER_ROOT_DIR}/arm64/modules"
     fi;
 
     if [ -z "${MTA_SERVER_PASSWORD_REPLACE_POLICY}" ]; then

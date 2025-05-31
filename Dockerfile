@@ -1,5 +1,5 @@
-ARG MTA_SERVER_VERSION=1.5.7
-ARG MTA_SERVER_BUILD_NUMBER=20359
+ARG MTA_SERVER_VERSION=1.6.0
+ARG MTA_SERVER_BUILD_NUMBER=23219
 
 FROM alpine:latest as helper
 
@@ -9,20 +9,19 @@ ARG MTA_SERVER_BUILD_NUMBER
 WORKDIR /mtasa-rootfs
 
 RUN apk add --no-cache --update wget tar
-RUN wget https://nightly.mtasa.com/multitheftauto_linux_x64-${MTA_SERVER_VERSION}-rc-${MTA_SERVER_BUILD_NUMBER}.tar.gz -O /tmp/mtasa.tar.gz \
+RUN wget https://nightly.mtasa.com/multitheftauto_linux_arm64-${MTA_SERVER_VERSION}-rc-${MTA_SERVER_BUILD_NUMBER}.tar.gz -O /tmp/mtasa.tar.gz \
     && wget https://linux.mtasa.com/dl/baseconfig.tar.gz -P /tmp \
-    && wget http://nightly.mtasa.com/files/modules/64/libmysqlclient.so.16 -P ./usr/lib \
-    && mkdir lib && cp ./usr/lib/libmysqlclient.so.16 ./lib \
+    # && wget http://nightly.mtasa.com/files/modules/64/libmysqlclient.so.16 -P ./usr/lib \
+    # && mkdir lib && cp ./usr/lib/libmysqlclient.so.16 ./lib \
     && tar -xzvf /tmp/mtasa.tar.gz \
-    && mv multitheftauto_linux_x64* mtasa \
+    && mv multitheftauto_linux_arm64* mtasa \
     && mkdir mtasa/.default \
-    && mkdir mtasa/x64/modules \
+    && mkdir mtasa/arm64/modules \
     && tar -xzvf /tmp/baseconfig.tar.gz -C mtasa/.default \
-    && wget https://nightly.mtasa.com/files/modules/64/mta_mysql.so -P mtasa/x64/modules \
-    && wget https://nightly.mtasa.com/files/modules/64/ml_sockets.so -P mtasa/x64/modules \
+    # && wget https://nightly.mtasa.com/files/modules/64/mta_mysql.so -P mtasa/x64/modules \
+    # && wget https://nightly.mtasa.com/files/modules/64/ml_sockets.so -P mtasa/x64/modules \
     && chmod go+rw mtasa -R \
-    && chmod +x usr/lib/libmysqlclient.so.16 lib/libmysqlclient.so.16
-
+    # && chmod +x usr/lib/libmysqlclient.so.16 lib/libmysqlclient.so.16
 
 # Main image
 
@@ -49,7 +48,7 @@ RUN groupadd -r mtasa && useradd --no-log-init -r -g mtasa mtasa \
     && chown -R mtasa:mtasa /data /resources /resource-cache /native-modules /mtasa \
     && chmod go+w /data /resources /resource-cache /native-modules \
     && apt-get update \
-    && dpkg --add-architecture i386 \
+    # && dpkg --add-architecture i386 \
     && apt-get install bash tar unzip libncursesw5 wget gdb -y \
     && apt-get autoclean -y \
     && apt-get autoremove -y
