@@ -1,7 +1,7 @@
 ARG MTA_SERVER_VERSION=1.6.0
 ARG MTA_SERVER_BUILD_NUMBER=23219
 
-FROM alpine:latest as helper
+FROM alpine:latest AS helper
 
 ARG MTA_SERVER_VERSION
 ARG MTA_SERVER_BUILD_NUMBER
@@ -20,8 +20,9 @@ RUN wget https://nightly.mtasa.com/multitheftauto_linux_arm64-${MTA_SERVER_VERSI
     && tar -xzvf /tmp/baseconfig.tar.gz -C mtasa/.default \
     # && wget https://nightly.mtasa.com/files/modules/64/mta_mysql.so -P mtasa/x64/modules \
     # && wget https://nightly.mtasa.com/files/modules/64/ml_sockets.so -P mtasa/x64/modules \
-    && chmod go+rw mtasa -R \
+    && chmod go+rw mtasa -R
     # && chmod +x usr/lib/libmysqlclient.so.16 lib/libmysqlclient.so.16
+
 
 # Main image
 
